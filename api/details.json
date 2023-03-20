@@ -1,0 +1,16 @@
+{
+    "Employee":
+    {
+        "id": 3,
+        "name": "Sashwot",
+        "empid": 101903809,
+        "city": "kathmandu"
+    },
+    "Employee2":
+    {
+        "id": 4,
+        "name": "sumit",
+        "empid": 101090529,
+        "city": "kathmandu"
+    }
+}

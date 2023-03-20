@@ -1,30 +1,17 @@
 import firebase_admin
+import json
 from firebase_admin import credentials, auth, db
 import os
 from django.shortcuts import render
-import firebase
+# import firebase
+data = os.path.abspath(os.path.dirname(__file__)) + "/key.json"
+details = os.path.abspath(os.path.dirname(__file__)) + "/details.json"
+cred_obj=firebase_admin.credentials.Certificate(data)
+databaseURL="https://rtmdb-b6919-default-rtdb.firebaseio.com/"
+default_app = firebase_admin.initialize_app(cred_obj,{'databaseURL':databaseURL})
 
-firebaseConfig = {
-  "apiKey": "AIzaSyCouEGy6HZubeasoDK-kT0VXADScG129XM",
-  "authDomain": "rtmdb-b6919.firebaseapp.com",
-  "projectId": "rtmdb-b6919",
-  "storageBucket": "rtmdb-b6919.appspot.com",
-  "databaseURL":"https://console.firebase.google.com/u/0/project/rtmdb-b6919/database/rtmdb-b6919-default-rtdb/data/~2F",
-  "messagingSenderId": "322781684128",
-  "appId": "1:322781684128:web:ca8406da023f301856c4c5",
-  "measurementId": "G-MB18G4WJ5G"
-};
-if not firebase_admin._apps:
-  data = os.path.abspath(os.path.dirname(__file__)) + "/key.json"
-  cred = credentials.Certificate(data)
-  firebase_admin.initialize_app(cred)
-  ref = db.reference('server/saving-data/fireblog')
-  # auth=firebase_admin.auth()
+ref= db.reference("/")
 
-  users_ref = ref.child('Employee')
-  users_ref.set({
-      'sivansh': {
-          'city': 'Biratnagar',
-          'empid': '101903808'
-      }
-  })
+with open(details,"r") as f:
+  file_contents = json.load(f)
+ref.set(file_contents)
